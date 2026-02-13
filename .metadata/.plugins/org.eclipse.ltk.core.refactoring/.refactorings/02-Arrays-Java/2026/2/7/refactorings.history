@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;com.BasicArray.OccuranceOfNumber.java&apos; to &apos;OccurrenceOfNumber.java&apos;&#x0D;&#x0A;- Original project: &apos;02-Arrays-Java&apos;&#x0D;&#x0A;- Original element: &apos;com.BasicArray.OccuranceOfNumber.java&apos;&#x0D;&#x0A;- Renamed element: &apos;com.BasicArray.OccurrenceOfNumber.java&apos;" description="Rename compilation unit &apos;OccuranceOfNumber.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;com.BasicArray{OccuranceOfNumber.java" name="OccurrenceOfNumber.java" references="false" stamp="1770966112427" version="1.0"/>
+</session>

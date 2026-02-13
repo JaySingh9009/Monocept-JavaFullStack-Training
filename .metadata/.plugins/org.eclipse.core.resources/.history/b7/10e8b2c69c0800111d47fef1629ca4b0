@@ -1,0 +1,10 @@
+package com.practice;
+import java.util.*;
+
+
+public class CommondlineArgument {
+	public static void main(String[] args) {
+		
+	}
+
+}

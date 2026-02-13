@@ -1,0 +1,54 @@
+package com.sambhav;
+
+import java.util.Scanner;
+
+public class CheckBillingAmount {
+
+    public static void main(String[] args) {
+
+        int height;
+        int age;
+        String wantPhoto;
+        int billingAmount = 0;
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the height in centimeters:");
+        height = scanner.nextInt();
+
+        System.out.println("Enter the age:");
+        age = scanner.nextInt();
+
+        System.out.println("Do you want photos? (yes/no):");
+        wantPhoto = scanner.next();
+
+        if (height <= 120) {
+            System.out.println("Person can't ride");
+        } else {
+
+            if (age < 12) {
+                billingAmount += 5;
+            } 
+            else if (age >= 12 && age < 18) {
+                billingAmount += 7;
+            } 
+            else if (age >= 18 && age < 45) {
+                billingAmount += 12;
+            } 
+            else if (age >= 45 && age <= 55) {
+                billingAmount += 0;   
+            } 
+            else {
+                billingAmount += 12; 
+            }
+
+            if (wantPhoto.equals("yes")) {
+                billingAmount += 3;
+            }
+
+            System.out.println("The total bill is $" + billingAmount);
+        }
+
+        scanner.close();
+    }
+}

@@ -1,0 +1,65 @@
+package com.sambhav;
+import java.util.*;
+
+public class CheckBillingAmount {
+	public static void main(String[] args) {
+		int height;
+		int age;
+		String wantphoto;
+		int billingAmount=0;
+		Scanner scanner=new Scanner(System.in);
+		System.out.println("Enter the height in centimeters");
+		height=scanner.nextInt();
+		System.out.println("Enter the age ");
+		age=scanner.nextInt();
+		System.out.println("Enter photo requirement in yes and no");
+		wantphoto=scanner.next();
+		
+		if(height<120) {
+			System.out.println("Person can't ride");
+		}
+		else {
+			if(age<12) {
+				billingAmount+=5;
+				if(wantphoto=="yes") {
+					billingAmount+=3;
+				}
+			
+					System.out.println("The total bill is $"+billingAmount);
+				
+				
+			}
+			else if(age>12  && age<18){
+				billingAmount+=7;
+				if(wantphoto=="yes") {
+					billingAmount+=3;
+				}
+				
+					System.out.println("The total bill is $"+billingAmount);
+				
+			}
+			else if(age>=18 && age<45) {
+				billingAmount+=12;
+				if(wantphoto=="yes") {
+					billingAmount+=3;
+				}
+				
+					System.out.println("The total bill is $"+billingAmount);
+				
+				
+			}
+			else {
+				billingAmount+=0;
+				if(wantphoto=="yes") {
+					billingAmount+=3;
+				}
+				
+				System.out.println("The total bill is $"+billingAmount);
+				
+			}
+		}
+		
+		
+	}
+
+}

@@ -1,0 +1,47 @@
+package com.loop;
+
+import java.util.Scanner;
+
+public class CheckPalindromeNumber {
+	public static void main(String[] args) {
+		// using for loop
+
+		
+			Scanner scanner=new Scanner(System.in);
+			System.out.println("Enter a number to check it is palindrome or not :");
+			int number=scanner.nextInt();
+			System.out.println("checking palindrome number by using for loop");
+
+			int reverse=0;
+			for(int i=number;i>0;i=i/10) {
+				int lastdigit=i%10;
+				 reverse=reverse*10+lastdigit;
+			}
+			if(reverse==number)
+			System.out.println(" number is palindrome "+number);
+			else {
+				System.out.println("number is not palindrome "+number);
+				
+			}
+			
+			//using while loop..
+			System.out.println("checking palindrome number by using for while");
+			int newreverse=0;
+			int copyofnumber=number;
+			
+			while(copyofnumber>0) {
+				int lastdigit=copyofnumber%10;
+				newreverse=newreverse*10 +lastdigit;
+				copyofnumber=copyofnumber/10;
+			}
+			if(newreverse==number)
+			System.out.println("number is palindrome "+number);
+			else {
+				System.out.println("number is not palindrome "+number);
+				
+			}
+	}
+	
+	
+
+}

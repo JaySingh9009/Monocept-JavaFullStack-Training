@@ -1,0 +1,35 @@
+package com.BasicArray;
+import java.util.*;
+
+public class OccurrenceOfNumber {
+	public static void main(String[] args) {
+		Scanner scanner=new Scanner(System.in);
+		System.out.println("Enter the valid size of Array: ");
+		int size=scanner.nextInt();
+		if(size>0) {
+			int[] array=new int[size];
+			System.out.println("Enter array elements :");
+			for(int i=0;i<size;i++) {
+				array[i]=scanner.nextInt();
+			}
+			
+			System.out.println("Enter target element of find its occurence");
+			int target=scanner.nextInt();
+			int count=0
+			for(int i=0;i<size;i++) {
+				if(array[i]==target) count++;
+			}
+			if(count>0) System.out.println("Occurrence of Target: " +target + " is " + count);
+			else {
+				System.out.println("Element is not present in array:");
+			}
+
+			
+			
+		}else {
+			System.out.println("Enter a valid positive size");
+		}
+	}
+	
+
+}

@@ -1,0 +1,22 @@
+package com.loop;
+import java.util.*;
+
+public class PrintOneToTen {
+	public static void main(String[] args) {
+//		Printing from 1 to 10 by using for loop;
+		System.out.println("Using for loop");
+		for(int i=1;i<10;i++) {
+			System.out.println(i);
+		}
+		
+//		Printint 1 to 10 by while loop;
+		System.out.println("Using for while");
+		int i=1;
+		while(i<=10) {
+			System.out.println(i);
+			i++;
+		}
+		
+	}
+
+}

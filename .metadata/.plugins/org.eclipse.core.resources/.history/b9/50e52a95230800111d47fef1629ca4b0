@@ -1,0 +1,26 @@
+package com.loop;
+
+import java.util.Scanner;
+
+public class ReverseNumber {
+	public static void main(String[] args) {
+
+		System.out.println("Reversing number by using for loop");
+		Scanner scanner=new Scanner(System.in);
+		System.out.println("Enter a number to get its reverse");
+		int number=scanner.nextInt();
+		
+		int reverse=0;
+		for(int i=number;i>0;i=i/10) {
+			int lastdigit=i%10;
+			 reverse=reverse*10+lastdigit;
+		}
+		System.out.println("Reverse of number is "+reverse);
+		
+		
+		
+	}
+
+
+
+}

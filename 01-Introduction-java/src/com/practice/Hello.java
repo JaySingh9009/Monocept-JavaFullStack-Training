@@ -1,0 +1,10 @@
+package com.practice;
+
+public class Hello {
+	public static void main(String[] args) {
+		int n1=0;
+		int nu=10;
+		System.out.println(n1+nu);
+	}
+
+}

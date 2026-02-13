@@ -1,0 +1,43 @@
+package com.loop;
+import java.util.Scanner;
+
+public class CheckPerfectNumber {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a number:");
+        int number = scanner.nextInt();
+
+        // -------- Using for loop --------
+        int sumFor = 0;
+        for (int i = 1; i <= number / 2; i++) {
+            if (number % i == 0) {
+                sumFor = sumFor + i;
+            }
+        }
+
+        if (sumFor == number && number != 0) {
+            System.out.println(number + " is a Perfect Number");
+        } else {
+            System.out.println(number + " is Not a Perfect Number");
+        }
+
+        // -------- Using while loop --------
+        int sumWhile = 0;
+        int i = 1;
+
+        while (i <= number / 2) {
+            if (number % i == 0) {
+                sumWhile = sumWhile + i;
+            }
+            i++;
+        }
+
+        if (sumWhile == number && number != 0) {
+            System.out.println( number + " is a Perfect Number");
+        } else {
+            System.out.println( number + " is Not a Perfect Number");
+        }
+    }
+}
+
