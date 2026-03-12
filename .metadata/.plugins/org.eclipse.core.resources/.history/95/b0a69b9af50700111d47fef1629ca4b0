@@ -1,7 +1,0 @@
-package com.sambhav;
-import java.util.*;
-public class TypeOfInteger {
-	Scanner scanner=new Scanner(System.in);
-	
-
-}
