@@ -2,7 +2,7 @@ package com.digitalLoan.model;
 
 public abstract class Loan {
 
-    public String loanId;
+    public int loanId;
     public String borrowerName;
     protected double principal;
     protected double interestRate;
@@ -11,7 +11,7 @@ public abstract class Loan {
         System.out.println("Loan Processing System Initialized...");
     }
 
-    public Loan(String loanId, String borrowerName, double principal, double interestRate)
+    public Loan(int loanId, String borrowerName, double principal, double interestRate)
             throws InvalidLoanException {
 
         System.out.println("Loan Constructor Called");

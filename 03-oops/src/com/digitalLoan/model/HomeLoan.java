@@ -2,7 +2,7 @@ package com.digitalLoan.model;
 
 public class HomeLoan extends Loan implements LoanEligibility {
 
-    public HomeLoan(String loanId, String borrowerName,
+    public HomeLoan(int loanId, String borrowerName,
                     double principal, double interestRate)
             throws InvalidLoanException {
 
