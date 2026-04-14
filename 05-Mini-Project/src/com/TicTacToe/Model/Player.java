@@ -1,7 +1,6 @@
 package com.TicTacToe.Model;
 
 public abstract class Player {
-
     protected String name;
     protected char symbol;
 
@@ -18,5 +17,6 @@ public abstract class Player {
         return symbol;
     }
 
-    public abstract void makeMove(Board board);
+    
+    public abstract String[] getMove();
 }
