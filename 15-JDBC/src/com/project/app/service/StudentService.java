@@ -57,26 +57,26 @@ public class StudentService {
             throw new SQLException("Invalid Course ID: " + courseId);
         }
         
-        try (Connection con = DBUtil.getConnection()) {
-            con.setAutoCommit(false);
+        try (Connection connection = DBUtil.getConnection()) {
+            connection.setAutoCommit(false);
             try {
                
                 if (studentDAO.getStudentById(studentId) == null) {
                     throw new SQLException("Student not found with ID: " + studentId);
                 }
               
-                if (registrationDAO.isDuplicateRegistration(con, studentId, courseId)) {
+                if (registrationDAO.isDuplicateRegistration(connection, studentId, courseId)) {
                     throw new SQLException("Student is already registered for this course.");
                 }
               
-                registrationDAO.registerCourse(con, studentId, courseId, fees);
+                registrationDAO.registerCourse(connection, studentId, courseId, fees);
                 
-                con.commit();
+                connection.commit();
             } catch (Exception e) {
-                con.rollback();
+                connection.rollback();
                 throw e;
             } finally {
-                con.setAutoCommit(true);
+                connection.setAutoCommit(true);
             }
         }
     }
@@ -97,23 +97,23 @@ public class StudentService {
     }
 
     public void deleteStudent(int id) throws SQLException {
-        try (Connection con = DBUtil.getConnection()) {
-            con.setAutoCommit(false);
+        try (Connection connection = DBUtil.getConnection()) {
+            connection.setAutoCommit(false);
             try {
                 if (studentDAO.getStudentById(id) == null) {
                     throw new SQLException("Student not found");
                 }
                
-                registrationDAO.deleteByStudentId(con, id);
+                registrationDAO.deleteByStudentId(connection, id);
               
-                studentDAO.deleteStudentById(con, id);
+                studentDAO.deleteStudentById(connection, id);
                 
-                con.commit();
+                connection.commit();
             } catch (Exception e) {
-                con.rollback();
+                connection.rollback();
                 throw e;
             } finally {
-                con.setAutoCommit(true);
+                connection.setAutoCommit(true);
             }
         }
     }

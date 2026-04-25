@@ -14,13 +14,13 @@ public class StudentDAO {
         if (s.getName() == null || s.getName().trim().isEmpty()) throw new IllegalArgumentException("Name cannot be empty");
 
         String sql = "INSERT INTO student (id, name, age, branch_id) VALUES (?, ?, ?, ?)";
-        try (Connection con = DBUtil.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, s.getId());
-            ps.setString(2, s.getName());
-            ps.setInt(3, s.getAge());
-            ps.setInt(4, s.getBranchId());
-            ps.executeUpdate();
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, s.getId());
+            preparedStatement.setString(2, s.getName());
+            preparedStatement.setInt(3, s.getAge());
+            preparedStatement.setInt(4, s.getBranchId());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             if (e.getErrorCode() == 1062) {
                 throw new SQLException("Student with ID " + s.getId() + " already exists.");
@@ -36,13 +36,13 @@ public class StudentDAO {
                      "LEFT JOIN branch b ON s.branch_id = b.branch_id " +
                      "LEFT JOIN registration r ON s.id = r.student_id " +
                      "LEFT JOIN course c ON r.course_id = c.course_id";
-        try (Connection con = DBUtil.getConnection();
-             Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                String branch = rs.getString("branch_name");
-                String course = rs.getString("course_name");
-                results.add("ID: " + rs.getInt("id") + ", Name: " + rs.getString("name") + 
+        try (Connection connection = DBUtil.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                String branch = resultSet.getString("branch_name");
+                String course = resultSet.getString("course_name");
+                results.add("ID: " + resultSet.getInt("id") + ", Name: " + resultSet.getString("name") + 
                             ", Branch: " + (branch != null ? branch : "N/A") +
                             ", Course: " + (course != null ? course : "N/A"));
             }
@@ -52,10 +52,10 @@ public class StudentDAO {
 
     public Student getStudentById(int id) throws SQLException {
         String sql = "SELECT s.*, b.branch_name FROM student s LEFT JOIN branch b ON s.branch_id = b.branch_id WHERE s.id = ?";
-        try (Connection con = DBUtil.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
                     Student s = new Student(rs.getInt("id"), rs.getString("name"), rs.getInt("age"), rs.getInt("branch_id"));
                     s.setBranchName(rs.getString("branch_name"));
@@ -70,12 +70,12 @@ public class StudentDAO {
         if (getStudentById(id) == null) throw new SQLException("Student not found");
 
         String sql = "UPDATE student SET name = ?, branch_id = ? WHERE id = ?";
-        try (Connection con = DBUtil.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, name);
-            ps.setInt(2, branchId);
-            ps.setInt(3, id);
-            ps.executeUpdate();
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedstatement = connection.prepareStatement(sql)) {
+            preparedstatement.setString(1, name);
+            preparedstatement.setInt(2, branchId);
+            preparedstatement.setInt(3, id);
+            preparedstatement.executeUpdate();
         }
     }
 

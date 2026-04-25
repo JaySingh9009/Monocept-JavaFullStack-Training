@@ -34,31 +34,31 @@ public class RegistrationDAO {
     public void updateCourseFee(int studentId, int courseId, double fee) throws SQLException {
         if (fee <= 0) throw new IllegalArgumentException("Fee must be > 0");
         String sql = "UPDATE registration SET fees_paid = ? WHERE student_id = ? AND course_id = ?";
-        try (Connection con = DBUtil.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setDouble(1, fee);
-            ps.setInt(2, studentId);
-            ps.setInt(3, courseId);
-            int rows = ps.executeUpdate();
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setDouble(1, fee);
+            preparedStatement.setInt(2, studentId);
+            preparedStatement.setInt(3, courseId);
+            int rows = preparedStatement.executeUpdate();
             if (rows == 0) throw new SQLException("Registration not found");
         }
     }
 
     public void cancelRegistration(int studentId, int courseId) throws SQLException {
         String sql = "DELETE FROM registration WHERE student_id = ? AND course_id = ?";
-        try (Connection con = DBUtil.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, studentId);
-            ps.setInt(2, courseId);
-            ps.executeUpdate();
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, studentId);
+            preparedStatement.setInt(2, courseId);
+            preparedStatement.executeUpdate();
         }
     }
 
     public void deleteByStudentId(Connection con, int studentId) throws SQLException {
         String sql = "DELETE FROM registration WHERE student_id = ?";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, studentId);
-            ps.executeUpdate();
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setInt(1, studentId);
+            preparedStatement.executeUpdate();
         }
     }
 
@@ -69,10 +69,10 @@ public class RegistrationDAO {
                      "JOIN registration r ON s.id = r.student_id " +
                      "JOIN course c ON r.course_id = c.course_id " +
                      "WHERE r.fees_paid > ?";
-        try (Connection con = DBUtil.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setDouble(1, minFee);
-            try (ResultSet rs = ps.executeQuery()) {
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setDouble(1, minFee);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {
                     results.add(rs.getString("name") + " | " + rs.getString("course_name") + " | " + rs.getDouble("fees_paid"));
                 }
@@ -87,9 +87,9 @@ public class RegistrationDAO {
                      "FROM course c " +
                      "LEFT JOIN registration r ON c.course_id = r.course_id " +
                      "GROUP BY c.course_name";
-        try (Connection con = DBUtil.getConnection();
-             Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection connection = DBUtil.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(sql)) {
             while (rs.next()) {
                 counts.put(rs.getString("course_name"), rs.getInt("count"));
             }
