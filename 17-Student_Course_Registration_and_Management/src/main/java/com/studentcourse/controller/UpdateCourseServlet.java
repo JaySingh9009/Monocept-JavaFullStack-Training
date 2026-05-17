@@ -12,22 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/course/add")
-public class AddCourseServlet extends HttpServlet {
-
-	@Override
-	public void init() {
-		System.out.println("AddCourseServlet initialized");
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (!isLoggedIn(req)) {
-			resp.sendRedirect(req.getContextPath() + "/login");
-			return;
-		}
-		req.getRequestDispatcher("/WEB-INF/views/course-form.jsp").forward(req, resp);
-	}
+@WebServlet("/course/update")
+public class UpdateCourseServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,6 +22,7 @@ public class AddCourseServlet extends HttpServlet {
 			return;
 		}
 
+		String idStr = req.getParameter("courseId");
 		String name = req.getParameter("courseName");
 		String duration = req.getParameter("duration");
 		String feesStr = req.getParameter("fees");
@@ -43,22 +30,25 @@ public class AddCourseServlet extends HttpServlet {
 
 		String error = validate(name, duration, feesStr, trainerName);
 		if (error != null) {
+			Course c = new Course();
+			c.setCourseId(Integer.parseInt(idStr));
+			c.setCourseName(name);
+			c.setDuration(duration);
+			c.setTrainerName(trainerName);
+			req.setAttribute("course", c);
 			req.setAttribute("errorMsg", error);
-			req.setAttribute("courseName", name);
-			req.setAttribute("duration", duration);
-			req.setAttribute("fees", feesStr);
-			req.setAttribute("trainerName", trainerName);
-			req.getRequestDispatcher("/WEB-INF/views/course-form.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/views/course-edit.jsp").forward(req, resp);
 			return;
 		}
 
 		Course c = new Course();
+		c.setCourseId(Integer.parseInt(idStr.trim()));
 		c.setCourseName(name.trim());
 		c.setDuration(duration.trim());
 		c.setFees(Double.parseDouble(feesStr.trim()));
 		c.setTrainerName(trainerName.trim());
 
-		new CourseDAO().addCourse(c);
+		new CourseDAO().updateCourse(c);
 		resp.sendRedirect(req.getContextPath() + "/courses");
 	}
 
@@ -83,10 +73,5 @@ public class AddCourseServlet extends HttpServlet {
 	private boolean isLoggedIn(HttpServletRequest req) {
 		HttpSession s = req.getSession(false);
 		return s != null && s.getAttribute("loggedInUser") != null;
-	}
-
-	@Override
-	public void destroy() {
-		System.out.println("AddCourseServlet destroyed");
 	}
 }
