@@ -57,12 +57,22 @@ public class UpdateCourseServlet extends HttpServlet {
 			return "Course name is required.";
 		if (duration == null || duration.trim().isEmpty())
 			return "Duration is required.";
+		try {
+			int durationMonths = Integer.parseInt(duration.trim());
+			if (durationMonths <= 0)
+				return "Duration must be a positive number of months (e.g. 3 for 3 months).";
+		} catch (NumberFormatException e) {
+			return "Duration must be a valid whole number representing months (e.g. 3, 6, 12).";
+		}
 		if (trainerName == null || trainerName.trim().isEmpty())
 			return "Trainer name is required.";
 		if (feesStr == null || feesStr.trim().isEmpty())
 			return "Fees are required.";
 		try {
-			if (Double.parseDouble(feesStr.trim()) <= 0)
+			double fees = Double.parseDouble(feesStr.trim());
+			if (fees < 0)
+				return "Fees cannot be negative.";
+			if (fees == 0)
 				return "Fees must be greater than 0.";
 		} catch (NumberFormatException e) {
 			return "Fees must be a valid number.";

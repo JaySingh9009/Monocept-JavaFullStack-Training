@@ -84,6 +84,21 @@ public class RegistrationDAO {
 		return false;
 	}
 
+	
+	public boolean isDuplicateRegistration(int studentId, int courseId) {
+		String sql = "SELECT COUNT(*) FROM registrations WHERE student_id = ? AND course_id = ?";
+		try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, studentId);
+			ps.setInt(2, courseId);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				return rs.getInt(1) > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public int getTotalRegistrations() {
 		String sql = "SELECT COUNT(*) FROM registrations";
 		try (Connection con = DBConnection.getConnection();

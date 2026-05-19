@@ -1,6 +1,7 @@
 package com.studentcourse.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import com.studentcourse.dao.CourseDAO;
 import com.studentcourse.dao.RegistrationDAO;
@@ -53,9 +54,28 @@ public class RegistrationFormServlet extends HttpServlet {
 		int studentId = Integer.parseInt(studentIdStr);
 		int courseId = Integer.parseInt(courseIdStr);
 
+		// Validate: registration date must not be in the future
+		try {
+			LocalDate regDate = LocalDate.parse(registrationDate);
+			if (regDate.isAfter(LocalDate.now())) {
+				req.setAttribute("errorMsg", "Registration date cannot be a future date.");
+				req.setAttribute("studentList", new StudentDAO().getAllStudents());
+				req.setAttribute("courseList", new CourseDAO().getAllCourses());
+				req.getRequestDispatcher("/WEB-INF/views/registration-form.jsp").forward(req, resp);
+				return;
+			}
+		} catch (Exception e) {
+			req.setAttribute("errorMsg", "Invalid registration date format.");
+			req.setAttribute("studentList", new StudentDAO().getAllStudents());
+			req.setAttribute("courseList", new CourseDAO().getAllCourses());
+			req.getRequestDispatcher("/WEB-INF/views/registration-form.jsp").forward(req, resp);
+			return;
+		}
+
+		// Validate: a student cannot be registered for the same course more than once (any status)
 		RegistrationDAO regDAO = new RegistrationDAO();
-		if ("Active".equals(status) && regDAO.isDuplicateActiveRegistration(studentId, courseId)) {
-			req.setAttribute("errorMsg", "This student is already actively registered for this course.");
+		if (regDAO.isDuplicateRegistration(studentId, courseId)) {
+			req.setAttribute("errorMsg", "This student is already registered for this course.");
 			req.setAttribute("studentList", new StudentDAO().getAllStudents());
 			req.setAttribute("courseList", new CourseDAO().getAllCourses());
 			req.getRequestDispatcher("/WEB-INF/views/registration-form.jsp").forward(req, resp);
